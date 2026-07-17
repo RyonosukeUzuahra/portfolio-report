@@ -3,257 +3,483 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>デイリーポートフォリオレポート — 2026年7月17日</title>
+<title>デイリー株式ポートフォリオ・レポート | 2026年7月18日</title>
 <style>
-  :root{
-    --bg:#0b0c0e; --panel:#151719; --panel2:#1c1f22; --ink:#eceef0; --dim:#9aa0a8; --faint:#5b6169;
-    --line:#2a2d31; --buy:#3fb950; --neutral:#d29922; --sell:#f85149; --mono:"SF Mono","Cascadia Code",Consolas,monospace;
-    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic Medium","Noto Sans JP","Segoe UI",sans-serif;
-    color-scheme: dark;
+  :root {
+    --bg: #f5f6f8;
+    --bg-card: #ffffff;
+    --text: #1a1d23;
+    --text-sub: #5a616e;
+    --border: #e2e4e9;
+    --accent: #2563eb;
+    --green-bg: #e6f6ec; --green-fg: #14804a; --green-line:#a7e3c0;
+    --red-bg: #fdecec; --red-fg: #c22a2a; --red-line:#f3b7b7;
+    --yellow-bg: #fff6df; --yellow-fg: #8a6100; --yellow-line:#f2dd9c;
+    --gray-bg: #eef0f3; --gray-fg: #565d68; --gray-line:#d7dae0;
+    --black-bg: #e7e8ec; --black-fg: #14161a; --black-line:#b9bcc4;
+    --shadow: 0 1px 3px rgba(20,20,30,0.06), 0 1px 2px rgba(20,20,30,0.04);
   }
-  :root[data-theme="light"]{
-    --bg:#f5f6f7; --panel:#ffffff; --panel2:#eef0f2; --ink:#1a1c1e; --dim:#5a6068; --faint:#8b909a;
-    --line:#dde0e3; --buy:#1a7f37; --neutral:#9a6700; --sell:#cf222e; color-scheme: light;
-  }
-  @media (prefers-color-scheme: light){
-    :root:not([data-theme="dark"]){
-      --bg:#f5f6f7; --panel:#ffffff; --panel2:#eef0f2; --ink:#1a1c1e; --dim:#5a6068; --faint:#8b909a;
-      --line:#dde0e3; --buy:#1a7f37; --neutral:#9a6700; --sell:#cf222e; color-scheme: light;
+  [data-theme="dark"], :root[data-theme="dark"] { color-scheme: dark; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a;
+      --bg-card: #1c1f26;
+      --text: #eceef2;
+      --text-sub: #9aa1ad;
+      --border: #2c303a;
+      --accent: #6ea8ff;
+      --green-bg: #0f2a1c; --green-fg: #5fd68f; --green-line:#1c4a30;
+      --red-bg: #301616; --red-fg: #f18b8b; --red-line:#5a2323;
+      --yellow-bg: #332a0c; --yellow-fg: #f0cf6a; --yellow-line:#5a4a15;
+      --gray-bg: #23262e; --gray-fg: #b6bcc6; --gray-line:#333844;
+      --black-bg: #26282e; --black-fg: #cfd2d8; --black-line:#3a3d44;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
     }
   }
-  *{box-sizing:border-box;}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;line-height:1.7;font-size:15px;}
-  .wrap{max-width:980px;margin:0 auto;padding:32px 20px 80px;}
-  h1{font-size:1.5rem;margin:0 0 6px;}
-  h2{font-size:1.15rem;margin:40px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);}
-  h3{font-size:1rem;margin:24px 0 10px;color:var(--dim);}
-  .meta{color:var(--dim);font-size:0.85rem;margin-bottom:4px;}
-  .banner{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:0.92rem;color:var(--dim);}
-  .banner b{color:var(--ink);}
-  table{width:100%;border-collapse:collapse;font-size:0.87rem;margin:10px 0;}
-  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
-  th{color:var(--dim);font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.03em;}
-  .num{font-family:var(--mono);white-space:nowrap;}
-  .pos{color:var(--buy);} .neg{color:var(--sell);}
-  .tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.02em;}
-  .tag-buy{background:rgba(63,185,80,0.15);color:var(--buy);}
-  .tag-neutral{background:rgba(210,153,34,0.15);color:var(--neutral);}
-  .tag-sell{background:rgba(248,81,73,0.15);color:var(--sell);}
-  .glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0 8px;}
-  .glance-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
-  .glance-card .name{font-weight:700;font-size:0.95rem;}
-  .glance-card .sub{color:var(--faint);font-size:0.78rem;margin-top:2px;}
-  .glance-card .tag{margin-top:8px;}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0;}
-  .checklist{list-style:none;padding:0;margin:0;}
-  .checklist li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;}
-  .checklist li:last-child{border-bottom:none;}
-  .checklist .time{font-family:var(--mono);color:var(--dim);min-width:110px;flex-shrink:0;font-size:0.82rem;}
-  .setup{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--neutral);border-radius:8px;padding:12px 16px;margin:10px 0;}
-  .setup.buy{border-left-color:var(--buy);}
-  .setup.sell{border-left-color:var(--sell);}
-  .note{color:var(--faint);font-size:0.8rem;}
-  .disclaimer{margin-top:48px;padding:18px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--dim);font-size:0.85rem;}
-  a{color:inherit;}
-  .src{font-size:0.72rem;color:var(--faint);margin-top:4px;}
+  :root[data-theme="dark"] {
+    --bg: #14161a; --bg-card: #1c1f26; --text: #eceef2; --text-sub: #9aa1ad; --border: #2c303a; --accent: #6ea8ff;
+    --green-bg: #0f2a1c; --green-fg: #5fd68f; --green-line:#1c4a30;
+    --red-bg: #301616; --red-fg: #f18b8b; --red-line:#5a2323;
+    --yellow-bg: #332a0c; --yellow-fg: #f0cf6a; --yellow-line:#5a4a15;
+    --gray-bg: #23262e; --gray-fg: #b6bcc6; --gray-line:#333844;
+    --black-bg: #26282e; --black-fg: #cfd2d8; --black-line:#3a3d44;
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f6f8; --bg-card: #ffffff; --text: #1a1d23; --text-sub: #5a616e; --border: #e2e4e9; --accent: #2563eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 0 60px;
+    background: var(--bg); color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  header.top {
+    padding: 28px 20px 22px; border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg-card), var(--bg));
+  }
+  header.top h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: 0.02em; }
+  .meta-line { color: var(--text-sub); font-size: 13px; margin: 2px 0; }
+  .meta-line b { color: var(--text); }
+  .idx-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 14px; }
+  .idx-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 16px; box-shadow: var(--shadow); min-width: 190px;
+  }
+  .idx-card .name { font-size: 12px; color: var(--text-sub); }
+  .idx-card .val { font-size: 19px; font-weight: 700; margin-top: 2px; }
+  .idx-card .chg.down { color: var(--red-fg); }
+  .idx-card .chg.up { color: var(--green-fg); }
+  section { padding: 26px 20px; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  h2 { font-size: 18px; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background: var(--accent); color:#fff; font-size:12px; font-weight:700; flex: none; }
+  h3 { font-size: 15px; margin: 18px 0 8px; }
+  p { margin: 8px 0; }
+  .sub { color: var(--text-sub); font-size: 13px; }
+  .callout {
+    background: var(--yellow-bg); border: 1px solid var(--yellow-line); color: var(--yellow-fg);
+    border-radius: 10px; padding: 10px 14px; font-size: 13px; margin: 10px 0;
+  }
+  .callout.gray { background: var(--gray-bg); border-color: var(--gray-line); color: var(--gray-fg); }
+
+  /* At-a-glance cards */
+  .glance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .stance-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px; box-shadow: var(--shadow); position: relative;
+  }
+  .stance-card .row1 { display: flex; justify-content: space-between; align-items: flex-start; }
+  .stance-card .ticker-name { font-weight: 700; font-size: 15px; }
+  .stance-card .ticker-code { color: var(--text-sub); font-size: 12px; }
+  .badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; border: 1px solid transparent; }
+  .badge.buy { background: var(--green-bg); color: var(--green-fg); border-color: var(--green-line); }
+  .badge.neutral { background: var(--gray-bg); color: var(--gray-fg); border-color: var(--gray-line); }
+  .badge.sell { background: var(--red-bg); color: var(--red-fg); border-color: var(--red-line); }
+  .stance-card .price-line { margin-top: 10px; font-size: 14px; }
+  .stance-card .price-line .chg.up { color: var(--green-fg); }
+  .stance-card .price-line .chg.down { color: var(--red-fg); }
+  .stance-card .detail { margin-top: 8px; font-size: 12.5px; color: var(--text-sub); }
+  .stance-card .tag { display:inline-block; font-size:11px; margin-top:8px; padding: 2px 8px; border-radius: 6px; background: var(--gray-bg); color: var(--text-sub); }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 13.5px; }
+  caption { text-align: left; caption-side: top; font-size: 12px; color: var(--text-sub); margin-bottom: 6px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--text-sub); font-weight: 600; font-size: 12px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .up { color: var(--green-fg); } .down { color: var(--red-fg); }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .dot.green{ background:#22c55e;} .dot.yellow{ background:#eab308;} .dot.red{ background:#ef4444;} .dot.black{ background:#111318; border:1px solid #666;}
+  .rule-legend { display:flex; flex-wrap:wrap; gap:14px; font-size:12.5px; color: var(--text-sub); margin: 4px 0 14px;}
+  .rule-legend span { display:flex; align-items:center; }
+
+  .news-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; box-shadow: var(--shadow); }
+  .news-card h4 { margin: 0 0 4px; font-size: 14px; }
+  .news-card p { margin: 4px 0; font-size: 13.5px; }
+
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .time { flex: none; width: 108px; font-weight: 700; font-size: 13px; color: var(--accent); }
+  .checklist .desc { font-size: 13.5px; }
+
+  .setup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 12px; }
+  .setup-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .setup-card h4 { margin: 0 0 8px; font-size: 14.5px; display:flex; justify-content:space-between; align-items:center;}
+  .setup-card .lv { display:flex; justify-content: space-between; font-size:13px; padding: 3px 0; }
+  .setup-card .lv b { font-weight: 600; }
+  .rr { font-size: 12.5px; color: var(--text-sub); margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);}
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } .checklist .time{width:88px;} }
+
+  footer.disclaimer {
+    padding: 22px 20px 40px; text-align: center; font-size: 12.5px; color: var(--text-sub);
+  }
+  .src-note { font-size: 11.5px; color: var(--text-sub); margin-top: 10px; }
+  code.src { background: var(--gray-bg); padding: 1px 5px; border-radius: 4px; font-size: 11px; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<h1>デイリーポートフォリオレポート</h1>
-<div class="meta">生成日時: 2026年7月17日(金) 21:30時点(JST) ／ 価格の取得時点は銘柄ごとに異なるため各セクションに明記 ／ 前回レポート: 2026年7月16日</div>
-
-<div class="banner">
-<b>本日の市場サマリー:</b> 東京市場は2日連続の下落局面。前日7/16は日経平均が前日比<span class="neg">−1,915.97円(−2.79%)の66,835.54円</span>、TOPIXが<span class="neg">−59.33pt(−1.45%)の4,028.79pt</span>で終了。米半導体株安の波及とAI・半導体テーマ株の連想売りが主因でした。本日7/17もこの流れが継続し、日経平均は続落して寄り付いた後、日中一時2,500円超下げて<b>64,300円台</b>まで下落する場面がありました(本レポート作成時点で確定終値は検索で確認できておらず、日中値動きとして記録)。ウォッチリストのAI・半導体テーマ3銘柄(浜松ホトニクス・ソフトバンクグループ・フジクラ)は本日も続落し、特にフジクラはインド競合企業による特許訴訟「勝利宣言」との報道を受けて日中一時4,564円(前日比−8.84%程度)まで急落する場面がありました。保有4銘柄(任天堂・クボタ・NTT・IHI)はAI・半導体テーマへの直接エクスポージャーが薄く、本日時点で検索確認できる新規の材料は限定的です。
-</div>
-
-<h2>📊 当日〜翌営業日の方針 ひと目で</h2>
-<div class="glance">
-  <div class="glance-card">
-    <div class="name">任天堂 (7974)</div>
-    <div class="sub">7,080円(7/16 15:30終値) <span class="pos">+0.94%</span>(前日比)／取得比 <span class="neg">−0.78%</span></div>
-    <span class="tag tag-neutral">Neutral</span>
+<header class="top">
+  <div class="wrap">
+    <h1>📊 デイリー株式ポートフォリオ・レポート</h1>
+    <p class="meta-line">生成日時: <b>2026年7月18日(土) 00:12 JST</b>　/　対象データ基準日: <b>2026年7月17日(金)の取引</b>（東証、次回取引セッションは3連休明け 2026年7月20日(月)を想定）</p>
+    <p class="meta-line">保有銘柄データ出典: <code class="src">holdings.json</code>（更新: 2026-07-15）　ウォッチリスト出典: <code class="src">watchlist.json</code>（更新: 2026-07-15）</p>
+    <div class="idx-row">
+      <div class="idx-card">
+        <div class="name">日経平均株価（7/17終値）</div>
+        <div class="val">64,141.12円</div>
+        <div class="chg down">▼2,694.42（-4.03%）</div>
+      </div>
+      <div class="idx-card">
+        <div class="name">TOPIX（7/17終値）</div>
+        <div class="val">3,919.21</div>
+        <div class="chg down">▼109.58（-2.72%）</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:14px;">
+      本日7/17は、前日の米半導体株安（TSMC決算は好調も「織り込み済み」でADR下落）を引き継ぎAI・半導体関連や金融株中心に幅広く売られ、日経平均は一時4,130円超安、下げ幅は歴代5位。キオクシアが巨額賠償報道でストップ安となったことも市場心理を悪化させた。3連休（海の日）を控えた持ち高調整・ヘッジ売りも下げを増幅したとみられる。
+    </div>
   </div>
-  <div class="glance-card">
-    <div class="name">クボタ (6326)</div>
-    <div class="sub">2,660.5円(7/16 15:30終値) <span class="neg">−0.93%</span>(前日比)／取得比 <span class="neg">−7.79%</span></div>
-    <span class="tag tag-neutral">Neutral</span>
+</header>
+
+<section id="glance">
+  <div class="wrap">
+    <h2><span class="num">1</span>本日のスタンス一覧（ひと目で確認）</h2>
+    <p class="sub">保有銘柄4本＋ウォッチリスト3本。Buy/Neutral/Sellは提案であり、最終判断はご自身で行ってください。</p>
+    <div class="glance-grid">
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">任天堂</div><div class="ticker-code">7974・保有56株</div></div><span class="badge neutral">中立</span></div>
+        <div class="price-line">7,014円 <span class="chg down">▼36円 (-0.51%)</span></div>
+        <div class="detail">取得比 <b class="down">-1.71%</b>（取得単価7,136円・6/1）｜50%ルール：<span class="dot green"></span>未到達</div>
+        <div class="tag">目安 +20株 / 6,800〜6,950円</div>
+      </div>
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">クボタ</div><div class="ticker-code">6326・保有100株</div></div><span class="badge neutral">中立</span></div>
+        <div class="price-line">2,692.5円 <span class="chg down">▼57.5円 (-2.09%)</span></div>
+        <div class="detail">取得比 <b class="down">-6.67%</b>（取得単価2,885円・6/1）｜50%ルール：<span class="dot green"></span>未到達</div>
+        <div class="tag">目安 +50株 / 2,600〜2,680円</div>
+      </div>
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">NTT</div><div class="ticker-code">9432・保有400株</div></div><span class="badge buy">買い</span></div>
+        <div class="price-line">150.9円 <span class="chg up">▲0.9円 (+0.60%)</span></div>
+        <div class="detail">取得比 <b class="up">+3.36%</b>（取得単価146円・6/1）｜50%ルール：<span class="dot green"></span>未到達</div>
+        <div class="tag">目安 +200株 / 149〜152円</div>
+      </div>
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">IHI</div><div class="ticker-code">7013・保有100株</div></div><span class="badge neutral">中立</span></div>
+        <div class="price-line">2,815.0円 <span class="chg up">▲2.5円 (+0.09%)</span></div>
+        <div class="detail">取得比 <b class="up">+0.90%</b>（取得単価2,790円・7/13）｜50%ルール：<span class="dot green"></span>未到達</div>
+        <div class="tag">追加は見送り、様子見</div>
+      </div>
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">浜松ホトニクス <span class="sub" style="font-weight:400;">(未保有)</span></div><div class="ticker-code">6965・ウォッチ</div></div><span class="badge neutral">中立</span></div>
+        <div class="price-line">2,280.0円 <span class="chg down">▼118.0円 (-4.92%)</span></div>
+        <div class="detail">半導体関連装置の連想売りとみられる下落。PTSは2,351円へ反発</div>
+        <div class="tag">打診 20株 / 2,200〜2,280円</div>
+      </div>
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">ソフトバンクG <span class="sub" style="font-weight:400;">(未保有)</span></div><div class="ticker-code">9984・ウォッチ</div></div><span class="badge neutral">中立</span></div>
+        <div class="price-line">約5,400円台 <span class="chg down">▼6〜9%程度</span></div>
+        <div class="detail">AI関連の期待剥落を受け急落、値幅が大きく方向感待ち（詳細は本文参照）</div>
+        <div class="tag">エントリー見送り、安定待ち</div>
+      </div>
+
+      <div class="stance-card">
+        <div class="row1"><div><div class="ticker-name">フジクラ <span class="sub" style="font-weight:400;">(未保有)</span></div><div class="ticker-code">5803・ウォッチ</div></div><span class="badge neutral">中立</span></div>
+        <div class="price-line">4,472円 <span class="chg down">▼289円 (-6.07%)</span></div>
+        <div class="detail">好決算上方修正後の反落・利益確定売り。ファンダメンタルズは良好</div>
+        <div class="tag">打診 50株 / 4,300〜4,450円</div>
+      </div>
+
+    </div>
   </div>
-  <div class="glance-card">
-    <div class="name">NTT (9432)</div>
-    <div class="sub">150.9円(7/16 15:30終値) <span class="pos">+0.60%</span>(前日比)／取得比 <span class="pos">+3.36%</span></div>
-    <span class="tag tag-buy">Buy(小口)</span>
+</section>
+
+<section id="prices">
+  <div class="wrap">
+    <h2><span class="num">2</span>保有銘柄：価格・騰落率</h2>
+    <table>
+      <caption>取得価格は holdings.json の代表値。価格確認時刻はソースにより異なるため個別に記載。</caption>
+      <thead><tr><th>銘柄</th><th>コード</th><th class="num">株数</th><th class="num">取得単価</th><th>取得日</th><th class="num">現在値</th><th>価格確認時刻</th><th class="num">取得比騰落率</th></tr></thead>
+      <tbody>
+        <tr><td>任天堂</td><td>7974</td><td class="num">56</td><td class="num">7,136円</td><td>2026-06-01</td><td class="num">7,014円</td><td>7/17 検索時点（終値近辺、公式終値未確認）</td><td class="num down">-1.71%</td></tr>
+        <tr><td>クボタ</td><td>6326</td><td class="num">100</td><td class="num">2,885円</td><td>2026-06-01</td><td class="num">2,692.5円</td><td>7/17 前場時点（終値未確認）</td><td class="num down">-6.67%</td></tr>
+        <tr><td>NTT</td><td>9432</td><td class="num">400</td><td class="num">146円</td><td>2026-06-01</td><td class="num">150.9円</td><td>7/16 15:30（7/17終値は検索で確認できず）</td><td class="num up">+3.36%</td></tr>
+        <tr><td>IHI</td><td>7013</td><td class="num">100</td><td class="num">2,790円</td><td>2026-07-13</td><td class="num">2,815.0円</td><td>7/14 15:30（7/15〜17データは検索で確認できず）</td><td class="num up">+0.90%</td></tr>
+      </tbody>
+    </table>
+    <p class="callout gray">注：NTTとIHIは直近の確定値が検索で取得できなかったため、確認できた最新日時の価格をそのまま使用しています（推測・補完はしていません）。本日7/17は市場全体が急落した日のため、この2銘柄についても実際にはより大きく動いている可能性があります。寄り付き前に最新値をご自身でご確認ください。</p>
+
+    <h3>ウォッチリスト：価格</h3>
+    <table>
+      <thead><tr><th>銘柄</th><th>コード</th><th class="num">現在値</th><th>価格確認時刻</th><th class="num">前日比</th></tr></thead>
+      <tbody>
+        <tr><td>浜松ホトニクス</td><td>6965</td><td class="num">2,280.0円</td><td>7/17 10:53</td><td class="num down">-4.92%</td></tr>
+        <tr><td>ソフトバンクグループ</td><td>9984</td><td class="num">約5,400〜5,960円（ソース間で乖離）</td><td>7/17 各種検索時点</td><td class="num down">概算-6〜9%</td></tr>
+        <tr><td>フジクラ</td><td>5803</td><td class="num">4,472円</td><td>7/17 引け</td><td class="num down">-6.07%</td></tr>
+      </tbody>
+    </table>
+    <p class="callout gray">注：ソフトバンクグループは検索結果間で価格に大きな乖離があり（5,424円・5,961円・5,620円など、取得時刻や参照元により不一致）、本日のボラティリティの高さから確定終値を一意に特定できませんでした。日中安値5,191円・高値5,676円という情報もあり、レンジ内で推移したとみられます。正確な終値はご自身で最新情報をご確認ください。</p>
   </div>
-  <div class="glance-card">
-    <div class="name">IHI (7013)</div>
-    <div class="sub">2,815円前後(7/14終値、直近確認値)／取得比 <span class="pos">+0.90%</span></div>
-    <span class="tag tag-neutral">Neutral</span>
+</section>
+
+<section id="rule50">
+  <div class="wrap">
+    <h2><span class="num">3</span>「半年以内＋50%ルール」判定</h2>
+    <p class="sub">取得日から6ヶ月以内に取得価格比+50%以上上昇した場合、売却検討のトリガーとするユーザールール（自動売却ではなく判断材料）。</p>
+    <div class="rule-legend">
+      <span><span class="dot green"></span>green：未到達</span>
+      <span><span class="dot yellow"></span>yellow：+40%以上（接近中）</span>
+      <span><span class="dot red"></span>red：+50%以上（トリガー到達）</span>
+      <span><span class="dot black"></span>black：6ヶ月経過後（要ユーザー判断）</span>
+    </div>
+    <table>
+      <thead><tr><th>銘柄</th><th class="num">取得比騰落率</th><th>6ヶ月判定期限</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>任天堂 (7974)</td><td class="num down">-1.71%</td><td>2026-12-01まで</td><td><span class="dot green"></span>未到達</td></tr>
+        <tr><td>クボタ (6326)</td><td class="num down">-6.67%</td><td>2026-12-01まで</td><td><span class="dot green"></span>未到達</td></tr>
+        <tr><td>NTT (9432)</td><td class="num up">+3.36%</td><td>2026-12-01まで</td><td><span class="dot green"></span>未到達</td></tr>
+        <tr><td>IHI (7013)</td><td class="num up">+0.90%</td><td>2027-01-13まで</td><td><span class="dot green"></span>未到達</td></tr>
+      </tbody>
+    </table>
+    <p class="callout">現時点で50%ルールの発動条件（6ヶ月以内＋50%以上上昇）に該当する保有銘柄はありません。4銘柄とも取得比±10%以内のレンジで、判断が必要な状況ではないと考えます。</p>
   </div>
-  <div class="glance-card">
-    <div class="name">浜松ホトニクス (6965) <span class="note">ウォッチ</span></div>
-    <div class="sub">2,280円(7/17 10:53時点) <span class="neg">−4.92%</span>(当日)</div>
-    <span class="tag tag-neutral">Neutral(様子見)</span>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <h2><span class="num">4</span>関連ニュース・材料</h2>
+    <h3>保有銘柄</h3>
+    <div class="news-card">
+      <h4>任天堂 (7974)</h4>
+      <p>2026年3月期は売上高2兆3,130億円（+98.6%）、営業利益3,601億円（+27.5%）と大幅増収増益。Switch 2の好調な立ち上がりが牽引。次回決算は8月6日（第1四半期）。本日の市場全体安の中でも下落率は限定的（-0.51%）で、ディフェンシブ性がうかがえる。</p>
+    </div>
+    <div class="news-card">
+      <h4>クボタ (6326)</h4>
+      <p>2026年度第1四半期は売上高8,100億円（+13.7%）、営業利益980億円（+59.1%）と大幅増益。北米市場の好調・価格改定・為替が寄与し、通期計画は据え置き。直近は5営業日続落からの戻りを経て、本日は再び利益確定売りが優勢。次回決算は8月4日。</p>
+    </div>
+    <div class="news-card">
+      <h4>NTT (9432)</h4>
+      <p>7月に「NTTドコモ・フィナンシャルグループ」を設立し決済・銀行（ドコモの銀行への改称）・証券事業を統合する方針を発表。IOWN APNを活用したGPUインフラ整備など成長投資も継続。アナリスト予想平均目標株価は169円（現在値比+約12%）で「買い」評価が優勢。</p>
+    </div>
+    <div class="news-card">
+      <h4>IHI (7013)</h4>
+      <p>2026年3月期は売上収益1兆6,434億円（+1.0%）、営業利益1,655億円（+15.3%）、純利益1,609億円（+42.8%）と増収増益。2026〜28年度を航空エンジン・防衛・原子力への先行投資期間と位置付け、2030〜32年度のFCF黒字化を目指す中期計画を提示。目立った悪材料は確認されていない。</p>
+    </div>
+    <h3>ウォッチリスト</h3>
+    <div class="news-card">
+      <h4>浜松ホトニクス (6965)</h4>
+      <p>本日-4.92%と急落したが、具体的な個別悪材料は検索では確認できず、半導体関連の連想売り・地合い悪化が主因とみられる。PTSでは2,351円まで反発しており、当日の売り一巡感もうかがえる。</p>
+    </div>
+    <div class="news-card">
+      <h4>ソフトバンクグループ (9984)</h4>
+      <p>2026年3月期はOpenAIなどAI関連投資の含み益拡大により純利益5兆23億円（+333.7%）と大幅増益だったが、本日はAI産業への過度な成長期待が後退する地合いの中、同社のAI関連エクスポージャーの大きさが逆に効き、大幅安（概算-6〜9%）。値動きの大きさが今回の急落の象徴的銘柄となった。</p>
+    </div>
+    <div class="news-card">
+      <h4>フジクラ (5803)</h4>
+      <p>6月18日に2027年3月期純利益予想を前期比+46%の2,290億円に上方修正（AI投資を背景とした光ファイバー需要の想定外の受注が要因）。その後の急騰分の利益確定売りが本日の-6.07%の主因とみられ、ファンダメンタルズ自体の悪化ではない。次回決算は8月7日。</p>
+    </div>
   </div>
-  <div class="glance-card">
-    <div class="name">ソフトバンクG (9984) <span class="note">ウォッチ</span></div>
-    <div class="sub">5,961円(7/16終値) <span class="neg">−6.27%</span>／夜間PTS 5,880円</div>
-    <span class="tag tag-neutral">Neutral(様子見)</span>
+</section>
+
+<section id="stance">
+  <div class="wrap">
+    <h2><span class="num">5</span>本セッション／翌営業日のスタンス提案（詳細）</h2>
+    <p class="sub">米国CFP相当の助言スタンスとして、価格動向・ニュース・50%ルールを踏まえた提案です。断定的な指示ではありません。</p>
+
+    <div class="grid2">
+      <div>
+        <h3>任天堂 (7974) — <span class="badge neutral">中立</span></h3>
+        <p>本日の急落局面でも下落率が-0.51%にとどまり、相対的な底堅さを確認。8/6決算まではポジション維持を軸に、押し目があれば少量の買い増しを検討する程度が妥当と考えます。</p>
+        <p class="sub">目安：+20株程度／指値レンジ 6,800〜6,950円</p>
+      </div>
+      <div>
+        <h3>クボタ (6326) — <span class="badge neutral">中立</span></h3>
+        <p>業績は堅調ながら本日は地合い悪化で-2.09%。取得比でも-6.67%とマイナス圏のため、慌てて売る必要はないものの、追加投資は2,600円台への調整を待つのが妥当と考えます。</p>
+        <p class="sub">目安：+50株程度／指値レンジ 2,600〜2,680円</p>
+      </div>
+      <div>
+        <h3>NTT (9432) — <span class="badge buy">買い</span></h3>
+        <p>通信という性質上、本日のような地合い悪化局面でも相対的にディフェンシブに推移しやすく、アナリスト目標株価（169円）との乖離も大きいため、現水準での買い増しは妥当と考えます。</p>
+        <p class="sub">目安：+200株程度／指値レンジ 149〜152円</p>
+      </div>
+      <div>
+        <h3>IHI (7013) — <span class="badge neutral">中立</span></h3>
+        <p>取得から日が浅く（7/13）、取得比+0.90%とほぼ横ばい。直近の価格データが確認できていないこともあり、追加判断は次の情報更新まで見送るのが妥当と考えます。</p>
+        <p class="sub">目安：追加なし。押し目があれば2,700〜2,780円を意識</p>
+      </div>
+      <div>
+        <h3>浜松ホトニクス (6965・未保有) — <span class="badge neutral">中立</span></h3>
+        <p>本日-4.92%と急落しましたが、個別の悪材料は確認できず地合い要因が主と考えられます。PTSで反発している点も踏まえ、少量の打診買いは検討可能ですが、本格エントリーは値動きの安定を待つのが妥当と考えます。</p>
+        <p class="sub">目安：打診20株程度／指値レンジ 2,200〜2,280円</p>
+      </div>
+      <div>
+        <h3>ソフトバンクグループ (9984・未保有) — <span class="badge neutral">中立</span></h3>
+        <p>AI関連エクスポージャーの大きさから本日の急落幅が突出しており、ソース間でも終値の特定が難しいほどの高ボラティリティです。新規エントリーは見送り、値動きが落ち着いてから判断するのが妥当と考えます。</p>
+        <p class="sub">目安：エントリー見送り／目安指値 5,200〜5,500円（安値圏を意識）</p>
+      </div>
+      <div>
+        <h3>フジクラ (5803・未保有) — <span class="badge neutral">中立</span></h3>
+        <p>好決算・上方修正を受けた急騰後の自然な調整とみられ、ファンダメンタルズ自体への懸念は乏しいと考えます。8/7決算を見極めつつ、少量の打診買いは選択肢になり得ますが、本格的な積み増しは決算後が妥当と考えます。</p>
+        <p class="sub">目安：打診50株程度／指値レンジ 4,300〜4,450円</p>
+      </div>
+    </div>
   </div>
-  <div class="glance-card">
-    <div class="name">フジクラ (5803) <span class="note">ウォッチ</span></div>
-    <div class="sub">4,564円前後(7/17日中安値) <span class="neg">−8.84%</span>程度</div>
-    <span class="tag tag-neutral">Neutral(様子見)</span>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <h2><span class="num">6</span>当日チェックリスト（東証 9:00〜15:00 JST）</h2>
+    <p class="sub">次回取引セッションは3連休明けの2026年7月20日(月)を想定。祝日変更等がないか各自ご確認ください。</p>
+    <ul class="checklist">
+      <li><div class="time">寄り前 8:00頃</div><div class="desc">前日の米国市場（特に半導体・AI関連）の終値と時間外先物（日経225先物）を確認。本レポートの価格情報を最新値で上書き確認。ソフトバンクG・フジクラ・浜松ホトニクスはギャップの方向をチェック。</div></li>
+      <li><div class="time">寄り付き 9:00</div><div class="desc">寄り値が想定指値レンジ内かを確認。窓開け（ギャップ）が大きい場合は指値の見直しを検討。IHI・NTTは特に直近データが古いため寄り値で数値を更新。</div></li>
+      <li><div class="time">前場終値 11:30</div><div class="desc">前日終値からの回復力・続落度合いを確認。日経平均が64,000円を割り込むか、TOPIXが3,900割れとなるかで地合いの強弱を判断。</div></li>
+      <li><div class="time">昼休み 11:30-12:30</div><div class="desc">個別材料のニュース速報をチェック（特にキオクシア関連の追加報道、半導体セクター全体の動き）。</div></li>
+      <li><div class="time">後場 12:30-15:00</div><div class="desc">後場の出来高・値動きの方向を確認。指値に到達した銘柄があれば提案レンジ内で執行を検討。</div></li>
+      <li><div class="time">引け前 14:45-15:00</div><div class="desc">大引けにかけての機関投資家動向・引け成り注文の偏りに注意。3連休を控えたポジション調整の売買が最後に集中しやすい時間帯。</div></li>
+    </ul>
   </div>
-</div>
+</section>
 
-<h2>1. 保有銘柄 判定テーブル(事実)</h2>
-<table>
-<tr><th>銘柄</th><th>取得日</th><th>取得単価</th><th>現在値(時点)</th><th>騰落率</th><th>ルール判定</th><th>半年期限まで</th></tr>
-<tr><td>任天堂 (7974)</td><td>2026-06-01</td><td class="num">7,136円</td><td class="num">7,080円 (7/16 15:30、本日7/17値は検索未確認)</td><td class="num neg">−0.78%</td><td>🟢 未到達</td><td>残り約137日</td></tr>
-<tr><td>クボタ (6326)</td><td>2026-06-01</td><td class="num">2,885円</td><td class="num">2,660.5円 (7/16 15:30、本日7/17値は検索未確認)</td><td class="num neg">−7.79%</td><td>🟢 未到達</td><td>残り約137日</td></tr>
-<tr><td>NTT (9432)</td><td>2026-06-01</td><td class="num">146円</td><td class="num">150.9円 (7/16 15:30、本日7/17値は検索未確認)</td><td class="num pos">+3.36%</td><td>🟢 未到達</td><td>残り約137日</td></tr>
-<tr><td>IHI (7013)</td><td>2026-07-13</td><td class="num">2,790円</td><td class="num">2,815円 (7/14終値、直近確認できた値)</td><td class="num pos">+0.90%</td><td>🟢 未到達</td><td>残り約180日</td></tr>
-</table>
-<div class="note">全銘柄「🟢未到達」＝+40%未満で50%ルールへの接近なし。任天堂は単元株での買い増しを反映した代表取得単価。クボタ・NTT・任天堂・IHIとも本日7/17時点の終値がWeb検索で確認できず、直近に確認できた値を暫定使用しています(リアルタイム保証はできません)。</div>
+<section id="trade-review">
+  <div class="wrap">
+    <h2><span class="num">7</span>直近の売買レビュー</h2>
+    <p class="sub">本自動レポートでは取引履歴データにアクセスできないため、このセクションは省略しています。チャットで取引履歴を共有いただければ、次回以降のレポートに反映します。</p>
+  </div>
+</section>
 
-<h2>2. 保有銘柄の直近ニュース</h2>
-<div class="card">
-<h3>任天堂 (7974)</h3>
-2026年3月期は増収増益。Switch2は移行率84%と好調で、ソフト累計販売本数4,871万本。5月25日よりSwitch2/Switch本体の希望小売価格を改定済み。7月は『スプラトゥーン レイダース』を発売予定。次期(2027年3月期)は売上高12兆3,000億円・営業利益1兆6,000億円を計画。本日(7/17)時点で新規の材料は確認できず。
-</div>
-<div class="card">
-<h3>クボタ (6326)</h3>
-直近発表済みの1〜3月期は純利益+77%・売上高+14%と北米建機需要と価格改定・為替が寄与し好調。次回決算は<b>2026年8月4日</b>予定で、決算発表までは方向感待ちの局面が続くと考えられます。
-</div>
-<div class="card">
-<h3>NTT (9432)</h3>
-2026年3月期は売上高14兆4,091億円と過去最高。金融事業を「NTTドコモ・フィナンシャルグループ」体制へ再編し、7月に本格稼働予定。IOWN APNは2027年度に主要都市〜県庁所在地へ展開計画。アナリスト目標株価コンセンサス(7/14時点)は平均169円・レーティング「買い」で、現値からの上昇余地が指摘されています。配当利回りは約3.7%とディフェンシブ性も評価材料。
-</div>
-<div class="card">
-<h3>IHI (7013)</h3>
-5月8日発表の決算は3期連続最高益見込みも、事業譲渡益・資産売却益など一時要因の寄与が大きい点に留意が必要。防衛予算の継続増額、次期戦闘機「GCAP」エンジン開発拡大など中期成長ドライバーは継続。株価は2026年1〜2月の高値4,698円から4月に2,800円まで急落しており、ボラティリティの高さがリスク要因です。
-</div>
+<section id="risk">
+  <div class="wrap">
+    <h2><span class="num">8</span>セクター集中・相関リスク分析</h2>
+    <p>現在の保有4銘柄は、ゲーム・エンタメ（任天堂）、農業機械（クボタ）、通信（NTT）、航空・防衛（IHI）と業種はある程度分散されています。ただしクボタとIHIはいずれも重工業・資本財セクターで、グローバル設備投資サイクルや為替（円高・円安）への感応度が近く、緩やかな相関があります。</p>
+    <p>一方、ウォッチリストの3銘柄（浜松ホトニクス・ソフトバンクグループ・フジクラ）は、いずれも半導体・AIインフラ関連という共通テーマを持っています。本日のように「AI過度な期待の後退」を材料に売られる局面では、この3銘柄が同時に大きく下落する場面が実際に観測されました（浜松ホトニクス-4.92%、フジクラ-6.07%、ソフトバンクG概算-6〜9%）。仮に3銘柄すべてをポートフォリオに追加すると、AIテーマへの集中度が一気に高まり、今回のような地合い悪化時に保有資産全体が同方向に大きく振れるリスクが高まります。</p>
+    <p><b>リバランス・ヘッジの提案：</b>ウォッチリストから追加する場合は一度に全てではなく1銘柄程度に絞る、もしくは時間分散（複数回に分けて打診買い）を行うことを提案します。また、ポートフォリオ全体でAI・半導体テーマへの偏りが出た場合には、NTTのようなディフェンシブ・内需系銘柄の比率を維持する、または日経平均・半導体指数への一部インバース型ETFで一時的にヘッジする、といった手当ても選択肢として考えられます。</p>
+  </div>
+</section>
 
-<h2>3. 保有銘柄 当日〜翌営業日の方針提案(米国トップクラスFP視点)</h2>
-<table>
-<tr><th>銘柄</th><th>方針</th><th>提案株数目安</th><th>提案単価目安</th><th>根拠</th></tr>
-<tr>
-  <td>任天堂 (7974)</td><td><span class="tag tag-neutral">Neutral</span></td>
-  <td>現状維持</td><td>押し目は6,900〜7,050円ゾーンを提案</td>
-  <td>取得比−0.78%と小幅マイナスに留まり、50%ルールまでは大きく距離があります。市場全体が2日続落する中でも相対的な下落耐性を確認できており、次回決算発表までは現状維持が妥当と考えます。</td>
-</tr>
-<tr>
-  <td>クボタ (6326)</td><td><span class="tag tag-neutral">Neutral</span></td>
-  <td>現状維持、押し目待ち</td><td>2,550〜2,620円の指値ゾーンを監視</td>
-  <td>取得比−7.79%とマイナス圏ですが、直近四半期は北米建機需要主導で好業績。8/4決算までは様子見が妥当で、決算前の高ボラティリティ局面での飛び乗りは避けることを提案します。</td>
-</tr>
-<tr>
-  <td>NTT (9432)</td><td><span class="tag tag-buy">Buy(小口)</span></td>
-  <td>100〜200株程度の買い増しを提案</td><td>148〜151円のレンジ内</td>
-  <td>取得比+3.36%、市場急落局面でも底堅く、アナリスト目標株価コンセンサス(平均169円・買い推奨)と配当利回り約3.7%を踏まえ、ディフェンシブな安定要因として小口の買い増しが妥当と考えます。</td>
-</tr>
-<tr>
-  <td>IHI (7013)</td><td><span class="tag tag-neutral">Neutral</span></td>
-  <td>現状維持(取得直後のため様子見)</td><td>—</td>
-  <td>取得から4日と日が浅く、防衛予算拡大という構造的な追い風はあるものの、直近決算の利益に一時要因が多く含まれる点と株価のボラティリティの高さを踏まえ、結論を急ぐ必要はないと考えます。押し目があれば2,700円台での買い増しも選択肢です。</td>
-</tr>
-</table>
+<section id="backtest">
+  <div class="wrap">
+    <h2><span class="num">9</span>定性的ストラテジー・バックテスト風レビュー</h2>
+    <p class="callout gray">本レポートはWeb検索による情報収集をベースにしており、プログラムによるOHLC時系列データへのアクセスは行っていません。以下は方向性を示す定性的な読みであり、厳密な数値バックテストではない点にご留意ください。</p>
+    <p>今回のような「材料难有りの全面安」局面では、ディフェンシブ性の高い銘柄（NTT、任天堂）が相対的に下落を抑える傾向が本日改めて確認されました。一方、テーマ性の強い銘柄（ソフトバンクG、フジクラ、浜松ホトニクス）はベータが高く、上昇時のリターンも大きい反面、地合い悪化時の下落も大きくなる傾向が定性的に読み取れます。取得後まもないIHIやディフェンシブなNTT・任天堂を中心に据え、テーマ株は少量・時間分散で組み入れるという現在の方針は、今回の急落局面においても相対的にポートフォリオ全体の値動きを抑える効果があったとみられます。</p>
+  </div>
+</section>
 
-<h2>3b. ウォッチリスト銘柄 エントリー方針提案</h2>
-<table>
-<tr><th>銘柄</th><th>方針</th><th>提案株数目安</th><th>提案単価目安</th><th>根拠</th></tr>
-<tr>
-  <td>浜松ホトニクス (6965)</td><td><span class="tag tag-neutral">Neutral</span></td>
-  <td>本日の新規エントリーは見送り推奨</td><td>2,200円割れなら打診買いを検討</td>
-  <td>7/16終値2,383.5円から7/17は10:53時点で2,280円まで続落しており、2日連続でAI・半導体テーマの連想売りに晒されています。半導体検査装置向け光源需要という長期テーマ自体は健在と考えられますが、下落トレンドが継続しており値動きの落ち着きを確認してからのエントリーを提案します。</td>
-</tr>
-<tr>
-  <td>ソフトバンクグループ (9984)</td><td><span class="tag tag-neutral">Neutral</span></td>
-  <td>本日の新規エントリーは見送り推奨</td><td>5,700円割れなら打診買い、5,800円台は様子見</td>
-  <td>7/16に−6.27%と急落、夜間PTSでも5,880円とさらに軟調な気配。傘下Arm Holdingsの格下げや出資先OpenAIのIPO延期報道など複数の悪材料が重なっており、事業会社としてのファンダメンタルズよりヘッドラインリスクが支配的な局面です。悪材料の続報有無を数日見極めることを提案します。</td>
-</tr>
-<tr>
-  <td>フジクラ (5803)</td><td><span class="tag tag-neutral">Neutral</span></td>
-  <td>本日の新規エントリーは見送り推奨</td><td>4,400〜4,600円ゾーンを監視、打診買いは分割で検討</td>
-  <td>7/16終値4,761円(前日比−7.46%)に続き、本日はインド競合企業による特許訴訟「勝利宣言」との報道で日中一時4,564円(−8.84%程度)まで急落。AI向けデータセンター光ファイバー需要という長期テーマ自体はGoogle・Microsoft・Amazon等からの引き合いも含め強いと考えられますが、特許係争という個別の不確実性が短期の値動きを支配しており、事実関係が整理されるまでは様子見が妥当と考えます。</td>
-</tr>
-</table>
+<section id="implications">
+  <div class="wrap">
+    <h2><span class="num">10</span>ニュースの短期・長期インプリケーション</h2>
+    <table>
+      <thead><tr><th>銘柄</th><th>短期（数日〜数週間）</th><th>長期（数ヶ月〜）</th></tr></thead>
+      <tbody>
+        <tr><td>任天堂</td><td>8/6決算までは材料難、市場全体のボラティリティに連れやすい。想定レンジ6,800〜7,300円。</td><td>Switch 2の販売動向次第で上振れ余地。長期レンジ6,500〜8,500円を想定。</td></tr>
+        <tr><td>クボタ</td><td>利益確定売りが続けば2,600円近辺までの調整も。想定レンジ2,550〜2,800円。</td><td>北米需要と為替次第で緩やかな上昇基調を想定。長期レンジ2,600〜3,200円。</td></tr>
+        <tr><td>NTT</td><td>ディフェンシブ買いが入りやすく相対的に安定。想定レンジ148〜155円。</td><td>ドコモ金融事業統合など成長施策が奏功すれば目標株価169円方向へ。長期レンジ148〜175円。</td></tr>
+        <tr><td>IHI</td><td>材料難、市場全体次第。想定レンジ2,700〜2,900円。</td><td>防衛・航空エンジン投資の進捗次第で中期的な再評価余地。長期レンジ2,700〜3,300円。</td></tr>
+        <tr><td>浜松ホトニクス</td><td>半導体セクターのセンチメント次第で不安定。想定レンジ2,150〜2,400円。</td><td>半導体検査・計測需要の回復が続けば持ち直し余地。長期レンジ2,200〜2,800円。</td></tr>
+        <tr><td>ソフトバンクG</td><td>AIテーマの地合い次第で乱高下が続きやすい。想定レンジ5,000〜5,800円。</td><td>OpenAI等投資先の評価額次第で大きく振れる。長期レンジ4,500〜6,500円。</td></tr>
+        <tr><td>フジクラ</td><td>利益確定売りの一巡待ち、8/7決算がカタリスト。想定レンジ4,200〜4,700円。</td><td>AIデータセンター向け光ファイバー需要が続けば上方修正基調が継続する可能性。長期レンジ4,300〜5,500円。</td></tr>
+      </tbody>
+    </table>
+    <p class="sub">※想定レンジはニュース・値動きを踏まえた大まかな目安であり、精緻な統計的予測ではありません。</p>
+  </div>
+</section>
 
-<h2>4. 日次取引プラン(タイムスタンプ付きチェックリスト)</h2>
-<ul class="checklist">
-  <li><span class="time">寄り付き前 8:00〜8:45</span><span>前夜の米国半導体株・Arm関連の値動き、為替(ドル円)、フジクラの特許訴訟報道に関する続報有無を確認。保有銘柄に決算・適時開示がないか確認。</span></li>
-  <li><span class="time">寄り付き直後 9:00〜9:15</span><span>日経平均・TOPIXの始値が前日終値(66,835.54円/4,028.79pt)比でどの位置か確認。ウォッチリスト3銘柄の寄り付きが本日安値圏を割り込むか、反発の兆しがあるかで地合いを判断。</span></li>
-  <li><span class="time">前場終盤の確認 11:00〜11:30</span><span>浜松ホトニクス2,200円、ソフトバンクG5,700円、フジクラ4,400円の各監視ラインへの接近有無を確認。前場引けの値位置を記録。</span></li>
-  <li><span class="time">後場再開〜中盤 12:30〜13:30</span><span>クボタ・IHIなど機械・防衛セクターに個別材料が出ていないか確認。日経平均が前日安値(64,300円台)を下回るか、逆に切り返すかを重点確認。</span></li>
-  <li><span class="time">引け前 14:30〜15:00</span><span>引け成りの方向感、翌営業日への持ち越し判断。ウォッチリストの反発/続落いずれの場合も「様子見継続」の判断が崩れていないか再確認し、NTTの小口買い増し執行の要否を最終判断。</span></li>
-</ul>
+<section id="technical">
+  <div class="wrap">
+    <h2><span class="num">11</span>テクニカル読み（日次・週次、方向感ベース）</h2>
+    <p class="callout gray">厳密なテクニカル指標（RSI・MACD等）の計算は行っておらず、価格推移とニュースから読み取れる方向感のみを示しています。</p>
+    <table>
+      <thead><tr><th>銘柄</th><th>日次</th><th>週次</th></tr></thead>
+      <tbody>
+        <tr><td>任天堂 (7974)</td><td><span class="badge neutral">Hold</span></td><td><span class="badge buy">Buy</span>（押し目狙い）</td></tr>
+        <tr><td>クボタ (6326)</td><td><span class="badge neutral">Hold</span></td><td><span class="badge neutral">Hold</span>（2,600円支持待ち）</td></tr>
+        <tr><td>NTT (9432)</td><td><span class="badge buy">Buy</span></td><td><span class="badge buy">Buy</span></td></tr>
+        <tr><td>IHI (7013)</td><td><span class="badge neutral">Hold</span></td><td><span class="badge neutral">Hold</span></td></tr>
+        <tr><td>浜松ホトニクス (6965)</td><td><span class="badge sell">Sell/警戒</span>（モメンタム悪化）</td><td><span class="badge neutral">Hold</span></td></tr>
+        <tr><td>ソフトバンクG (9984)</td><td><span class="badge sell">Sell/警戒</span>（急落・高ボラ）</td><td><span class="badge neutral">Hold</span>（長期テーマは維持）</td></tr>
+        <tr><td>フジクラ (5803)</td><td><span class="badge neutral">Hold</span>（過熱後の調整）</td><td><span class="badge buy">Buy</span>（上方修正基調）</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-<h2>5. 直近トレードレビュー</h2>
-<div class="card note">トレード履歴の共有が現時点でないため、本セクションは省略します。エントリー/エグジットの記録を共有いただければ次回反映します。</div>
+<section id="setups">
+  <div class="wrap">
+    <h2><span class="num">12</span>本日の注目セットアップ Top5</h2>
+    <div class="setup-grid">
+      <div class="setup-card">
+        <h4>日経平均225 <span class="badge neutral">反発狙い</span></h4>
+        <div class="lv"><span>エントリー目安</span><b>63,500〜64,100円</b></div>
+        <div class="lv"><span>利益確定</span><b>66,000円</b></div>
+        <div class="lv"><span>損切り</span><b>62,700円割れ</b></div>
+        <div class="rr">歴代5位の下げ幅・3連休控えの需給要因が中心なら自律反発の余地。ただし下放れなら追随売りに注意。</div>
+      </div>
+      <div class="setup-card">
+        <h4>TOPIX <span class="badge neutral">反発狙い</span></h4>
+        <div class="lv"><span>エントリー目安</span><b>3,880〜3,920</b></div>
+        <div class="lv"><span>利益確定</span><b>4,030（7/16水準）</b></div>
+        <div class="lv"><span>損切り</span><b>3,830割れ</b></div>
+        <div class="rr">日経平均より下落率は小さく（-2.72%）相対的に底堅い。金融・内需の踏ん張りがカギ。</div>
+      </div>
+      <div class="setup-card">
+        <h4>ソフトバンクG (9984) <span class="badge neutral">様子見</span></h4>
+        <div class="lv"><span>エントリー目安</span><b>5,200〜5,400円</b></div>
+        <div class="lv"><span>利益確定</span><b>5,700円</b></div>
+        <div class="lv"><span>損切り</span><b>5,100円割れ</b></div>
+        <div class="rr">本日高値5,676円・安値5,191円の広いレンジ。値幅が大きく、リスクリワードは魅力的だがボラティリティに見合った小さめのサイズを推奨。</div>
+      </div>
+      <div class="setup-card">
+        <h4>フジクラ (5803) <span class="badge neutral">押し目候補</span></h4>
+        <div class="lv"><span>エントリー目安</span><b>4,350〜4,450円</b></div>
+        <div class="lv"><span>利益確定</span><b>4,760円（直近高値圏）</b></div>
+        <div class="lv"><span>損切り</span><b>4,250円割れ</b></div>
+        <div class="rr">上方修正という強いファンダメンタルズ材料があるための調整とみられ、R/Rは比較的良好。8/7決算前のポジション調整には注意。</div>
+      </div>
+      <div class="setup-card">
+        <h4>浜松ホトニクス (6965) <span class="badge neutral">打診候補</span></h4>
+        <div class="lv"><span>エントリー目安</span><b>2,200〜2,280円</b></div>
+        <div class="lv"><span>利益確定</span><b>2,400円</b></div>
+        <div class="lv"><span>損切り</span><b>2,150円割れ</b></div>
+        <div class="rr">PTSでの反発（2,351円）が売り一巡を示唆。ただし個別材料が薄いため小さめのサイズで様子見が妥当。</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2>6. ポートフォリオの偏り・連動リスク分析</h2>
-<div class="card">
-<b>セクター偏り:</b> 保有4銘柄は「ゲーム・エンタメ(任天堂)」「機械・農業機器(クボタ)」「通信インフラ(NTT)」「機械・防衛(IHI)」と業種は分散されていますが、クボタとIHIはともに「機械」セクターで景気循環・製造業マクロ要因への感応度が重なります。<br><br>
-<b>連動リスク(重要):</b> 保有銘柄は本日・前日と続くAI・半導体テーマの急落局面でも市場平均ほどの下げにはなっておらず、分散として機能しています。一方、<b>ウォッチリスト3銘柄(浜松ホトニクス・ソフトバンクグループ・フジクラ)は全てAI/半導体テーマという同一の連想軸で動いており、2日連続でそろって大幅安を記録している</b>ことがそれを裏付けています。もし3銘柄すべてをまとめて新規保有した場合、ポートフォリオ全体が「AI設備投資センチメント」という単一のマクロ要因に強く連動する構成になり、分散効果がほぼ失われるリスクがあります。<br><br>
-<b>リバランス/ヘッジ案:</b> ウォッチリストへ新規投資する場合は3銘柄同時ではなく段階的に1〜2銘柄に絞る、あるいはエントリー時期を数営業日〜数週間ずらすことを推奨します。ヘッジとしては、AI/半導体テーマに逆相関しやすいディフェンシブ資産(現金比率の維持、NTTのような内需ディフェンシブ・高配当銘柄の比率維持)で全体のベータを抑える方向が有効と考えられます。
-</div>
+<footer class="disclaimer">
+  <p>これは参考情報としての提案であり、正式な投資助言ではありません。最終的な売買判断と注文の実行は、ご自身の責任で行ってください。</p>
+</footer>
 
-<h2>7. 戦略バックテスト(概算・簡易版)</h2>
-<div class="card">
-<div class="note">⚠ 本セクションは、Web検索で取得できる範囲の価格情報をもとにした方向感ベースの簡易評価です。日次終値の時系列データへの直接アクセスがないため、厳密な勝率・最大ドローダウンの数値計算(移動平均クロス等)は今回実施できていません。次回以降、証券会社のAPIやダウンロード可能な時系列データが利用できる場合はより精緻な数値バックテストを行います。</div>
-<b>定性的な傾向:</b> 保有銘柄(任天堂・NTT・IHI)は取得単価に対しおおむね横ばい〜プラス圏を維持し、2日続落の市場急落局面でも相対的に底堅い値動きを見せています。クボタのみ取得後に軟調(−7.79%)ですが、次回決算(8/4)前の様子見局面と整合的です。ウォッチリスト3銘柄は2営業日連続で大幅安となっており、下落トレンドが継続する中での単純な逆張りエントリーはダマシが多発しやすい地合いと考えられます。
-</div>
-
-<h2>8. ニュースの短期・長期影響翻訳</h2>
-<div class="card">
-<b>短期(数日〜数週間):</b> 米半導体株安の波及とAI関連銘柄への連想売りは2営業日連続で発生しており、当面はソフトバンクG・浜松ホトニクス・フジクラを中心に不安定な値動きが続く可能性があります。フジクラは特許訴訟報道という個別の悪材料も重なっており、続報次第で短期的にさらに−5%〜+10%程度のレンジで振れる可能性があります。目安として、地合いが落ち着くまでは3銘柄とも下値模索が続くリスクをやや高めに見ておくのが妥当です。<br><br>
-<b>長期(数ヶ月〜):</b> AIインフラ投資需要(データセンター向け光ファイバー、半導体検査装置向け光源など)の構造的な成長ドライバー自体は損なわれていないと考えられ、短期の急落は需要縮小そのものではなく、バリュエーション調整・利益確定売りの側面が強いとみられます。数ヶ月スパンでは、フジクラ・浜松ホトニクスとも押し目形成後の回復余地があり得ますが、ソフトバンクグループは出資先OpenAIのIPO時期という個別の不確実性が上乗せされるため、長期でもレンジ幅は相対的に広くなりやすい点に留意が必要です。
-</div>
-
-<h2>9. 日足/週足テクニカル分析とBuy/Hold/Sell判断</h2>
-<div class="card note">⚠ 日足/週足の詳細なローソク足・移動平均・RSIの数値計算には時系列データAPIが必要で、今回もWeb検索で得られた価格スナップショットからの方向感評価に留めています。</div>
-<table>
-<tr><th>銘柄</th><th>日足判断</th><th>週足判断</th><th>根拠</th></tr>
-<tr><td>任天堂 (7974)</td><td>Hold</td><td>Hold</td><td>市場急落局面でも底堅く、決算(7月下旬想定)通過まではレンジ内推移を想定。</td></tr>
-<tr><td>クボタ (6326)</td><td>Hold</td><td>Hold</td><td>取得後は軟調も下げ幅は市場平均並みに収束。8/4決算までは方向感待ち。</td></tr>
-<tr><td>NTT (9432)</td><td>Buy</td><td>Buy</td><td>ディフェンシブ属性で市場急落局面でもプラス圏を維持、アナリスト目標株価も現値上回る。</td></tr>
-<tr><td>IHI (7013)</td><td>Hold</td><td>Hold</td><td>構造的な防衛需要拡大テーマはあるが、年初来の値動きの荒さから週足でも方向感確定は時期尚早。</td></tr>
-<tr><td>浜松ホトニクス (6965)</td><td>Sell</td><td>Hold</td><td>2営業日連続で−4〜5%の下落が継続、短期トレンドは明確に下向き。週足レンジの下限を試す動き。</td></tr>
-<tr><td>ソフトバンクグループ (9984)</td><td>Sell</td><td>Sell</td><td>6,000円の節目を明確に割り込み、複数の悪材料が重なる中で下降トレンドが継続。</td></tr>
-<tr><td>フジクラ (5803)</td><td>Sell</td><td>Hold</td><td>2営業日で二桁%規模の下落。長期の需要テーマは強いが短期トレンドは下向き。</td></tr>
-</table>
-
-<h2>10. 当日の注目セットアップ 上位5つ</h2>
-<div class="setup">
-<b>1. 日経平均225指数</b> — 2日連続下落からの支持線確認待ち<br>
-エントリー目安(反発狙い): 64,000〜64,300円 ／ 利確目標: 66,800円台(7/16終値近辺) ／ 損切りライン: 63,500円割れ ／ リスクリワード: 短期的な過熱感の解消後は戻りやすい水準だが、米半導体株の続落次第で下振れ継続リスクもあり中立〜やや良好。
-</div>
-<div class="setup">
-<b>2. フジクラ (5803)</b> — 特許訴訟報道由来の急落、事実関係確認後の反発待ち<br>
-エントリー目安: 4,400〜4,600円の分割打診買い ／ 利確目標: 5,100円台 ／ 損切りライン: 4,300円割れ ／ リスクリワード: 値幅が大きく短期リターン期待は高いが、訴訟の続報次第で下振れリスクも相応に高い。
-</div>
-<div class="setup">
-<b>3. ソフトバンクグループ (9984)</b> — 複数悪材料が重なる中の戻り待ち<br>
-エントリー目安: 5,700円割れの打診買い ／ 利確目標: 6,300円台 ／ 損切りライン: 5,500円割れ ／ リスクリワード: 悪材料が一巡すれば反発余地は大きいが、OpenAI関連ヘッドライン次第で下振れリスクも大きく中立。
-</div>
-<div class="setup">
-<b>4. 浜松ホトニクス (6965)</b> — AI設備投資テーマの押し目候補<br>
-エントリー目安: 2,200円割れ ／ 利確目標: 2,450円台回復 ／ 損切りライン: 2,100円割れ ／ リスクリワード: 半導体検査装置向け需要という長期追い風があり良好だが、短期は連想売りの継続リスクあり。
-</div>
-<div class="setup buy">
-<b>5. NTT (9432)</b> — ディフェンシブな押し目買い候補<br>
-エントリー目安: 148〜150円 ／ 利確目標: 160円台 ／ 損切りライン: 144円割れ ／ リスクリワード: 配当利回り約3.7%とアナリスト目標株価上振れが下支えとなり、リスクリワードは良好。
-</div>
-
-<div class="disclaimer">
-これは参考情報としての提案であり、正式な投資助言ではありません。最終的な売買判断と注文の実行は、ご自身の責任で行ってください。
-</div>
-
-<div class="src">
-参照(本日・前日取得): <a href="https://finance.matsui.co.jp/stock/7974/index">任天堂</a> ／ <a href="https://finance.matsui.co.jp/stock/6326/index">クボタ</a> ／ <a href="https://finance.yahoo.co.jp/quote/9432.T">NTT</a> ／ <a href="https://finance.matsui.co.jp/stock/7013/index">IHI</a> ／ <a href="https://finance.yahoo.co.jp/quote/6965.T">浜松ホトニクス</a> ／ <a href="https://www.bloomberg.com/jp/news/articles/2026-06-26/TH7UKHT96OSH00">ソフトバンクG・OpenAI関連</a> ／ <a href="https://www.nikkei.com/article/DGXZQOFL1418U0U6A710C2000000/">フジクラ・特許訴訟報道</a> ／ <a href="https://news.yahoo.co.jp/articles/658647e38a7bfdc18fd31a4ad71544dffc484fd2">東証大引け・AI半導体安(7/16)</a> ／ <a href="https://news.yahoo.co.jp/articles/3a4edf0b6643fe3a91167aee6effdabad8553f27">日経平均日中急落(7/17)</a>
-</div>
-
-</div>
 </body>
 </html>
