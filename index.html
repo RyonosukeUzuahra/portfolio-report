@@ -12,9 +12,18 @@
     --muted: #5b6270;
     --border: #e2e5ea;
     --accent: #2563eb;
+    --green: #1a7f37;
+    --green-bg: #e6f4ea;
+    --yellow: #9a6700;
+    --yellow-bg: #fff8e1;
+    --red: #c62828;
+    --red-bg: #fde8e8;
+    --gray: #55606c;
+    --gray-bg: #eef0f3;
     --warn-bg: #fff8e1;
     --warn-border: #f5c518;
     --warn-text: #7a5b00;
+    --table-head: #f0f2f5;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -24,9 +33,18 @@
       --muted: #9aa1ac;
       --border: #2c313a;
       --accent: #60a5fa;
+      --green: #4ade80;
+      --green-bg: #0f2818;
+      --yellow: #facc15;
+      --yellow-bg: #332600;
+      --red: #f87171;
+      --red-bg: #33161a;
+      --gray: #9aa1ac;
+      --gray-bg: #262a31;
       --warn-bg: #3a2f00;
       --warn-border: #caa400;
       --warn-text: #f5d879;
+      --table-head: #262a31;
     }
   }
   :root[data-theme="dark"] {
@@ -36,9 +54,18 @@
     --muted: #9aa1ac;
     --border: #2c313a;
     --accent: #60a5fa;
+    --green: #4ade80;
+    --green-bg: #0f2818;
+    --yellow: #facc15;
+    --yellow-bg: #332600;
+    --red: #f87171;
+    --red-bg: #33161a;
+    --gray: #9aa1ac;
+    --gray-bg: #262a31;
     --warn-bg: #3a2f00;
     --warn-border: #caa400;
     --warn-text: #f5d879;
+    --table-head: #262a31;
   }
   * { box-sizing: border-box; }
   body {
@@ -46,55 +73,362 @@
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", "Yu Gothic", sans-serif;
     margin: 0;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 4rem;
     line-height: 1.7;
+    font-size: 15px;
   }
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
+  .container { max-width: 980px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
   }
-  h1 {
-    font-size: 1.5rem;
-    margin-bottom: 0.25rem;
-  }
-  .timestamp {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-  }
+  h3 { font-size: 1rem; margin: 1.2rem 0 0.5rem; }
+  .timestamp { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
   .banner {
     background: var(--warn-bg);
     border: 1px solid var(--warn-border);
     color: var(--warn-text);
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.1rem;
     border-radius: 8px;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.92rem;
   }
   .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 1.25rem 1.5rem;
+    padding: 1.1rem 1.3rem;
     margin-bottom: 1rem;
   }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 0.75rem;
+  }
+  .stance-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--gray);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+  }
+  .stance-card.buy { border-left-color: var(--green); }
+  .stance-card.sell { border-left-color: var(--red); }
+  .stance-card.neutral { border-left-color: var(--gray); }
+  .stance-card .name { font-weight: 700; font-size: 0.95rem; }
+  .stance-card .sub { color: var(--muted); font-size: 0.8rem; margin-bottom: 0.4rem; }
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin: 0.2rem 0 0.4rem;
+  }
+  .badge.buy { background: var(--green-bg); color: var(--green); }
+  .badge.sell { background: var(--red-bg); color: var(--red); }
+  .badge.neutral { background: var(--gray-bg); color: var(--gray); }
+  .flag {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 0.35rem;
+  }
+  .flag.green { background: var(--green); }
+  .flag.yellow { background: var(--yellow); }
+  .flag.red { background: var(--red); }
+  .flag.black { background: #333; border: 1px solid #888; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+  th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--table-head); font-weight: 700; white-space: nowrap; }
+  .tablewrap { overflow-x: auto; margin-bottom: 1rem; }
+  .pos { color: var(--green); font-weight: 600; }
+  .neg { color: var(--red); font-weight: 600; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.82rem; }
+  ul { padding-left: 1.3rem; }
+  li { margin-bottom: 0.3rem; }
+  .checklist-item { margin-bottom: 0.5rem; }
+  .checklist-time { font-weight: 700; color: var(--accent); }
   .disclaimer {
     color: var(--muted);
     font-size: 0.85rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     border-top: 1px solid var(--border);
     padding-top: 1rem;
   }
+  .source-note { font-size: 0.8rem; color: var(--muted); }
+  code { font-size: 0.85em; background: var(--gray-bg); padding: 0.1em 0.35em; border-radius: 4px; }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>デイリー・ポートフォリオレポート 2026-08-11</h1>
-  <div class="timestamp">生成開始 2026-08-11 07:04 JST</div>
-  <div class="banner">⏳ このレポートは現在生成中です。数分後に再読み込みしてください。</div>
-  <div class="card">
-    <p>本日分のレポートを生成しています。価格データの確認、ニュース収集、分析セクションの作成が完了次第、このページは自動的に完全版に置き換わります。</p>
+  <div class="timestamp">生成 2026-08-11 07:20 JST</div>
+
+  <div class="banner">📅 本日8/11(火)は「山の日」で東証は休場です。以下の東証プレopenチェックリストは次回取引日である8/12(水)向けに作成しています。米国市場は本日8/11(火)も通常営業です。</div>
+
+  <h2>Buy / Neutral / Sell 一覧（ひと目で）</h2>
+  <div class="grid">
+    <div class="stance-card neutral">
+      <div class="name">任天堂 7974（東証）</div>
+      <div class="sub">¥8,265.0（前日比+2.76%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">決算好感で2日連続急伸。高値圏でのため急いだ追撃は避け、押し目待ちが妥当と考えます。</div>
+    </div>
+    <div class="stance-card buy">
+      <div class="name">クボタ 6326（東証）</div>
+      <div class="sub">¥2,763.0（前日比+0.11%）</div>
+      <span class="badge buy">Buy</span>
+      <div class="small">通期利益予想を38%上方修正も株価は反応薄。ファンダメンタルズに対し出遅れ感があると考えます。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">NTT 9432（東証）</div>
+      <div class="sub">¥159.9（前日比+0.88%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">増収増益・自社株買いは下支え材料ですが、短期的な上振れ材料に乏しく様子見が妥当と考えます。</div>
+    </div>
+    <div class="stance-card buy">
+      <div class="name">IHI 7013（東証）</div>
+      <div class="sub">¥2,759.0（前日比+0.53%）</div>
+      <span class="badge buy">Buy</span>
+      <div class="small">防衛・航空エンジンけん引で大幅増益、通期上方修正。構造的な追い風が続くと考えます。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">浜松ホトニクス 6965（東証）</div>
+      <div class="sub">¥2,397.5（前日比+3.23%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">直近取得の新規建玉。決算上振れ・大口買い観測はプラスですが、急伸後の高値掴みは避けたいところです。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">Salesforce CRM（NYSE）</div>
+      <div class="sub">$197.51（前日比+2.47%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">経営陣交代とAIコスト懸念が重石。8/26決算発表を控え、決算通過までは様子見が妥当と考えます。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">Super Micro SMCI（NASDAQ）</div>
+      <div class="sub">$31.46（前日比+1.06%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">本日8/11引け後（日本時間深夜～翌朝）に決算発表。イベント通過までポジション追加は控えるべきと考えます。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">SpaceX SPCX（NASDAQ）</div>
+      <div class="sub">$138.74（前日比+4.23%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">増収は好感も設備投資急増とロックアップ解除が重石。ボラティリティが高く高値追いは避けたいところです。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">ソフトバンクG 9984（未保有・東証）</div>
+      <div class="sub">¥5,484.0（前日比-1.22%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">AI投資益で最終利益3.3倍増も急伸後の利益確定売り。既存AI関連銘柄との重複を踏まえ様子見が妥当と考えます。</div>
+    </div>
+    <div class="stance-card neutral">
+      <div class="name">フジクラ 5803（未保有・東証）</div>
+      <div class="sub">¥5,580.0（前日比+7.62%）</div>
+      <span class="badge neutral">Neutral</span>
+      <div class="small">光部品の受注拡大は本物ですが値幅が極端で追随リスクが高く、様子見が妥当と考えます。</div>
+    </div>
   </div>
+
+  <h2>ポートフォリオ概況（2026-08-10終値ベース）</h2>
+  <div class="card">
+    <div class="tablewrap">
+      <table>
+        <tr><th>区分</th><th>評価額</th><th>前日比</th></tr>
+        <tr><td>円建て保有（東証5銘柄）小計</td><td>¥1,198,875</td><td class="pos">+¥18,492（+1.57%）</td></tr>
+        <tr><td>ドル建て保有（米国3銘柄）小計</td><td>$3,890.08</td><td class="pos">+$97.01（+2.56%）</td></tr>
+        <tr><td>ドル建て小計・円換算<br><span class="source-note">USDJPY 158.64（2026-08-10、frankfurter_ecb・yahoo_chart_api 確認済）</span></td><td>¥617,122</td><td class="muted">為替影響含む</td></tr>
+        <tr><td><strong>合計（円換算）</strong></td><td><strong>¥1,816,000</strong></td><td class="pos"><strong>+¥33,882（+1.90%）</strong></td></tr>
+      </table>
+    </div>
+    <p class="small muted">米ドル建て資産は円換算後で合計の約34.0%を占めています（詳細は「セクター集中・為替エクスポージャー」参照）。円換算額は上記USDJPYレートで算出しており、レート自体の変動（円高・円安）は個別銘柄の騰落率には含めていません。</p>
+  </div>
+
+  <h2>+50%／半年ルール判定（保有銘柄のみ）</h2>
+  <div class="tablewrap">
+    <table>
+      <tr><th>銘柄</th><th>市場</th><th>取得日</th><th>取得単価</th><th>終値</th><th>騰落率</th><th>判定</th><th>期限までの残日数</th></tr>
+      <tr><td><span class="flag green"></span>任天堂</td><td>東証</td><td>2026-06-01</td><td>¥7,136</td><td>¥8,265.0</td><td class="pos">+15.82%</td><td>未到達</td><td>112日（2026-12-01）</td></tr>
+      <tr><td><span class="flag green"></span>クボタ</td><td>東証</td><td>2026-06-01</td><td>¥2,885</td><td>¥2,763.0</td><td class="neg">-4.23%</td><td>未到達</td><td>112日（2026-12-01）</td></tr>
+      <tr><td><span class="flag green"></span>NTT</td><td>東証</td><td>2026-06-01</td><td>¥146</td><td>¥159.9</td><td class="pos">+9.52%</td><td>未到達</td><td>112日（2026-12-01）</td></tr>
+      <tr><td><span class="flag green"></span>IHI</td><td>東証</td><td>2026-07-13</td><td>¥2,790</td><td>¥2,759.0</td><td class="neg">-1.11%</td><td>未到達</td><td>155日（2027-01-13）</td></tr>
+      <tr><td><span class="flag green"></span>浜松ホトニクス</td><td>東証</td><td>2026-08-06</td><td>¥2,320</td><td>¥2,397.5</td><td class="pos">+3.34%</td><td>未到達</td><td>179日（2027-02-06）</td></tr>
+      <tr><td><span class="flag green"></span>Salesforce</td><td>NYSE</td><td>2026-05-01</td><td>$184.72</td><td>$197.51</td><td class="pos">+6.92%</td><td>未到達</td><td>82日（2026-11-01）</td></tr>
+      <tr><td><span class="flag green"></span>Super Micro</td><td>NASDAQ</td><td>2026-05-01</td><td>$36.76</td><td>$31.46</td><td class="neg">-14.42%</td><td>未到達</td><td>82日（2026-11-01）</td></tr>
+      <tr><td><span class="flag green"></span>SpaceX</td><td>NASDAQ</td><td>2026-07-25（加重平均取得）</td><td>$116.62</td><td>$138.74</td><td class="pos">+18.97%</td><td>未到達</td><td>167日（2027-01-25）</td></tr>
+    </table>
+  </div>
+  <p class="small muted">🟢=未到達　🟡=+40%以上（接近）　🔴=+50%以上（売却検討トリガー）　⚫=半年経過（要ユーザー判断）。本日は全銘柄が🟢未到達です。騰落率はすべて同一通貨内（円は円、ドルはドル）で計算しており、為替変動の影響は含みません。</p>
+
+  <h2>保有銘柄 詳細</h2>
+
+  <h3>任天堂（7974・東証・円）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥8,265.0 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+2.76%（前日終値¥8,043.0）</p>
+    <p>2027年3月期第1四半期は減収（-9.5%）ながら、関税還付とソフト販売好調で営業利益+150.5%・最終利益+53.5%の大幅増益。8/6引け後発表を受け8/7に+5.26%、8/10も+2.76%と2日連続で急伸しました。</p>
+    <p><strong>短期含意：</strong>好決算を消化した後の過熱感に注意。1週間程度は利益確定売りとの綱引きが予想され、想定レンジは¥7,900～¥8,500程度。<br><strong>長期含意：</strong>ソフト販売構造の改善が継続すれば増益基調は月単位で維持される可能性、想定レンジは¥7,500～¥9,000（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Buy寄り／2日連続陽線で短期モメンタム強いが、直近安値からの急伸で過熱感あり。数値的バックテストではなく方向感の目安です。<br><strong>週足：</strong>Hold寄り／決算材料の一巡待ち。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>目安10～20株、指値レンジ¥7,900～¥8,100（押し目待ち）。現在値¥8,265はこのレンジの上に位置するため、今すぐの追撃ではなく調整を待つ水準として提示します。</p>
+  </div>
+
+  <h3>クボタ（6326・東証・円）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥2,763.0 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+0.11%（前日終値¥2,760.0）</p>
+    <p>8/4発表の2026年12月期第2四半期累計最終利益は前年比+87.8%の1,736億円。通期予想を最終利益2,100億円→2,890億円へ大幅上方修正し、3期ぶり最高益更新見通し。増益率は12.5%増→54.8%増に拡大しました。</p>
+    <p><strong>短期含意：</strong>好材料に対し株価反応が鈍く出遅れ修正の余地、想定レンジ¥2,700～¥2,900（数週間）。<br><strong>長期含意：</strong>農業機械・建機の海外需要が堅調なら増益基調継続、想定レンジ¥2,600～¥3,200（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Buy寄り／好決算発表後も値幅が小さく調整未了。<br><strong>週足：</strong>Buy寄り／上方修正を織り込み切っていない可能性。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge buy">Buy</span>目安20～30株、指値レンジ¥2,700～¥2,780。現在値¥2,763はレンジ内にあり、押し目を待たず分割での組み入れも選択肢と考えます。</p>
+  </div>
+
+  <h3>NTT（9432・東証・円）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥159.9 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+0.88%（前日終値¥158.5）</p>
+    <p>8/6発表の2026年度第1四半期は最終利益+5.8%の2,748億円、営業収益+10.9%・営業利益+4.9%の増収増益。8/3には自社株買いの取得状況を開示するなど株主還元姿勢が継続しています。</p>
+    <p><strong>短期含意：</strong>自社株買いが下支えとなり大きな崩れは想定しづらい一方、上値を追う材料も乏しい、想定レンジ¥155～¥165（数週間）。<br><strong>長期含意：</strong>通信インフラの安定収益とAI・データセンター関連投資の進捗次第で緩やかな増益基調、想定レンジ¥150～¥175（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Hold寄り／小幅レンジ内での推移。<br><strong>週足：</strong>Hold寄り／方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>目安50～100株、指値レンジ¥155～¥158。現在値¥159.9はレンジよりやや上のため、押し目待ちが妥当と考えます。</p>
+  </div>
+
+  <h3>IHI（7013・東証・円）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥2,759.0 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+0.53%（前日終値¥2,744.5）</p>
+    <p>8/5発表の2027年3月期第1四半期は売上収益+10.9%、営業利益+250.5%の732億円。不動産譲渡益約400億円の寄与に加え、航空エンジン・防衛事業の拡大が業績をけん引し通期予想も上方修正されました。</p>
+    <p><strong>短期含意：</strong>一時的な特別利益の剥落は次四半期以降の注意点ですが、防衛・航空エンジンの構造的需要は継続、想定レンジ¥2,650～¥2,900（数週間）。<br><strong>長期含意：</strong>日本の防衛費拡大トレンドが続けば中期的な増益基調、想定レンジ¥2,500～¥3,200（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Buy寄り／決算好感の流れが継続。<br><strong>週足：</strong>Buy寄り／防衛関連セクター全体の資金流入が支援材料。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge buy">Buy</span>目安20～30株、指値レンジ¥2,700～¥2,750。現在値¥2,759はレンジよりやや上のため、指値到達を待つか分割での組み入れが妥当と考えます。</p>
+  </div>
+
+  <h3>浜松ホトニクス（6965・東証・円）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥2,397.5 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+3.23%（前日終値¥2,322.5）</p>
+    <p>8/6発表の2026年9月期第3四半期決算で通期営業利益予想を9%上方修正。同日、米ブラックロックの保有比率増加も報じられ、機関投資家の買いが観測されています。8/6に50株を¥2,320で新規取得したばかりのポジションです。</p>
+    <p><strong>短期含意：</strong>決算上振れと大口投資家の買い観測が支援材料ですが、直近急伸で過熱感もあり、想定レンジ¥2,300～¥2,550（数週間）。<br><strong>長期含意：</strong>センサー・光学デバイスの半導体検査／量子・AI関連需要が続けば中期的な上振れ余地、想定レンジ¥2,200～¥2,800（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Buy寄り／決算後2営業日で連続陽線。<br><strong>週足：</strong>Hold寄り／取得直後のポジションのため様子見を推奨。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>目安追加なし～10株、指値レンジ¥2,280～¥2,350。現在値¥2,397.5はレンジ上に位置し、直近取得済みのため高値での追撃は避けるのが妥当と考えます。</p>
+  </div>
+
+  <h3>Salesforce（CRM・NYSE・米ドル）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 NYSE) $197.51 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+2.47%（前日終値$192.74）</p>
+    <p>8/5にSrini Tallapragada氏（社長 兼 最高エンジニアリング・顧客成功責任者）の退任を発表、8/6にはMiguel Milano氏がCOOに昇格するなど経営陣の入れ替えが進行中。AIコスト増への懸念から株価は8/6に一時-4.23%まで下落する場面もありました。次回決算は8/26発表予定（引け後）。アナリスト平均目標株価は$241.72（買い推奨優勢）。</p>
+    <p><strong>短期含意：</strong>経営陣交代とAIコスト懸念が重石となる一方、8/26決算までは材料難、想定レンジ$188～$210（数週間）。<br><strong>長期含意：</strong>SaaS収益基盤とAIエージェント（Agentforce等）の収益化次第で中期的な上振れ余地、想定レンジ$180～$240（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Hold寄り／下落から切り返す動き。<br><strong>週足：</strong>Hold寄り／決算通過待ち。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>目安追加なし、指値レンジ$188～$193（押し目）。現在値$197.51はレンジより上のため、8/26決算通過後の判断が妥当と考えます。</p>
+  </div>
+
+  <h3>Super Micro Computer（SMCI・NASDAQ・米ドル）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 NASDAQ) $31.46 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+1.06%（前日終値$31.13）</p>
+    <p><strong>⚠️ 本日8/11（米国時間）引け後に2026年度第4四半期決算発表を控えています。</strong>7/21の予備業績更新では調整後粗利益率15～17%（5月時点計画の8.2～8.4%から大幅改善）を見込む一方、出荷の後ろ倒しにより売上高はガイダンスレンジ（$110～125億）の下限になる見通し。第4四半期の新規受注は600億ドル超と過去最高のバックログを記録しました。</p>
+    <p><strong>短期含意：</strong>決算はバイナリー（振れ幅大）イベント。粗利益率改善が確認できれば上振れ、売上の弱さが強調されれば下振れ。決算通過後の想定レンジ$26～$38（数日～数週間）と通常より広めに見ておくべきです。<br><strong>長期含意：</strong>AIサーバー需要とバックログの取り込み次第で中期的な回復余地、想定レンジ$28～$45（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Hold寄り／3か月続落からの下げ止まり感。<br><strong>週足：</strong>Hold寄り／決算通過待ちでトレンド判断は保留が妥当。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>目安追加なし。決算発表前のポジション追加は推奨せず、決算通過後の値動きを見てから判断するのが妥当と考えます。</p>
+  </div>
+
+  <h3>SpaceX（SPCX・NASDAQ・米ドル）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 NASDAQ) $138.74 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+4.23%（前日終値$133.11）</p>
+    <p>8/4発表の上場後初の四半期決算で売上高$78.1億（予想$69.3億を上回る、前年比+92%）と好決算。一方で設備投資が6倍超の$183.7億に急増（うちAI関連$158.3億）し、時間外取引では一時-8%下落する場面もありました。8/6にはIPO後初のロックアップ解除が始まっており、AIコーディング企業Cursorの$600億規模の買収が今週中にも完了する可能性が報じられています。</p>
+    <p><strong>短期含意：</strong>ロックアップ解除に伴う需給悪化リスクと、Cursor買収報道への期待が綱引き。想定レンジ$120～$150（数週間）とボラティリティ高め。<br><strong>長期含意：</strong>宇宙輸送とAIインフラ投資の両輪が軌道に乗れば中期的な成長余地は大きいが、資本支出負担の検証が必要、想定レンジ$110～$180（数か月）。</p>
+    <p><strong>テクニカル（日足）：</strong>Buy寄り／決算後の急落を吸収し切り返し。<br><strong>週足：</strong>Hold寄り／ロックアップ解除に伴う需給要因は読みにくく方向感の目安に留まります。数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>目安追加なし、指値レンジ$128～$135（押し目待ち）。現在値$138.74はレンジより上、かつロックアップ解除中のため高値追いは避けるのが妥当と考えます。</p>
+  </div>
+
+  <h2>ウォッチリスト 詳細（未保有）</h2>
+
+  <h3>ソフトバンクグループ（9984・東証・円・未保有）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥5,484.0 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比-1.22%（前日終値¥5,552.0）</p>
+    <p>OpenAIなどAI関連への大規模投資により、売上高+7.7%の7兆7,987億円、親会社帰属最終利益+333.7%の5兆23億円と大幅増益。アナリスト平均目標株価は¥7,651（現水準から2桁%の上昇余地）と強気の見方が優勢です。本日の下落は好決算を織り込んだ後の利益確定売りとみられます。</p>
+    <p><strong>短期含意：</strong>急伸後の調整局面、想定レンジ¥5,200～¥5,800（数週間）。<br><strong>長期含意：</strong>AI投資先の含み益拡大が続けばNAV評価の見直しが進む可能性、想定レンジ¥4,800～¥6,800（数か月）。</p>
+    <p><strong>テクニカル：</strong>日足Hold寄り／週足Buy寄り。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>未保有につき新規なら指値レンジ¥5,100～¥5,300（押し目）を提案します。既存の保有銘柄（SMCI・SPCX・浜松ホトニクス）とAIテーマで重複するため、集中リスクの観点からも急いだ新規組み入れは避けるのが妥当と考えます。</p>
+  </div>
+
+  <h3>フジクラ（5803・東証・円・未保有）</h3>
+  <div class="card">
+    <p><strong>終値(8/10 東証) ¥5,580.0 — yahoo_chart_api・stockanalysis で一致確認</strong>／前日比+7.62%（前日終値¥5,185.0）</p>
+    <p>8/7発表の第1四半期決算・通期上方修正を受け、直近4営業日は+7.88%→+9.62%→-9.40%→+12.82%と乱高下。ハイパースケーラー（大手クラウド事業者）からの光コンポーネント想定外受注が上方修正の背景で、6/18の上方修正では2027年3月期営業利益予想を2,110億円→3,100億円へ引き上げています。AIデータセンター向け光ファイバ・光部品需要が構造的な追い風です。</p>
+    <p><strong>短期含意：</strong>ファンダメンタルズ自体は強いものの値動きが極端で、短期的な追随はハイリスク、想定レンジ¥4,800～¥6,200（数週間、値幅大）。<br><strong>長期含意：</strong>AIデータセンター投資サイクルが続く限り構造的な増益基調、想定レンジ¥4,500～¥7,000（数か月）。</p>
+    <p><strong>テクニカル：</strong>日足は方向感つかみにくく判定困難（値幅過大）／週足Buy寄り。方向感の目安であり数値的バックテストではありません。</p>
+    <p><strong>提案：</strong><span class="badge neutral">Neutral</span>未保有につき新規なら指値レンジ¥4,900～¥5,100（大幅押し目待ち）を提案します。値動きの荒さに加え、AI関連銘柄（SMCI・SPCX・浜松ホトニクス）との重複もあるため、現水準での飛びつきは推奨しません。</p>
+  </div>
+
+  <h2>指数・マクロ環境</h2>
+  <div class="tablewrap">
+    <table>
+      <tr><th>指数</th><th>終値(8/10)</th><th>前日比</th><th>備考</th></tr>
+      <tr><td>日経平均株価（^N225）</td><td>66,970.22</td><td class="pos">+2.08%</td><td>参考・単一ソース。任天堂・フジクラなど個別好決算が指数を押し上げ</td></tr>
+      <tr><td>S&P 500（^GSPC）</td><td>7,753.11</td><td class="neg">-0.06%</td><td>参考・単一ソース。8/7の米雇用統計悪化（非農業部門-2.3万人）を受けた金利低下相場からは小幅反落</td></tr>
+      <tr><td>NASDAQ総合（^IXIC）</td><td>26,605.357</td><td class="neg">-0.32%</td><td>参考・単一ソース。同上</td></tr>
+    </table>
+  </div>
+  <ul class="small">
+    <li><strong>日銀：</strong>次回金融政策決定会合は9/17～18（結果公表9/18）。直近7/30～31会合の「主な意見」は9/28公表予定で、当面は会合空白期間です。</li>
+    <li><strong>米国雇用統計：</strong>7月分は8/7（日本時間21:30）に発表済み、非農業部門雇用者数が市場予想に反し前月比-2.3万人の減少となり、利下げ期待から株式市場の追い風となりました。次回8月分は例年通り9月第1金曜前後の見込みです。</li>
+    <li><strong>米国CPI：</strong>8月分の具体的発表日は今回の検索では特定できませんでした。米労働統計局（BLS）公式カレンダーでの確認を推奨します。</li>
+  </ul>
+
+  <h2>チェックリスト</h2>
+  <h3>東証（次回取引日 2026-08-12（水）向け）</h3>
+  <p class="small muted">本日8/11は休場のため、以下は8/12(水)朝のチェック項目です。</p>
+  <div class="card">
+    <div class="checklist-item"><span class="checklist-time">08:00-08:45 寄り付き前</span> — 前夜の米国市場（S&P500・NASDAQ・USDJPY）とSMCI決算の反応を確認。SMCIは8/11引け後決算のため、8/12朝の値動きが浜松ホトニクス・AI関連の地合いに波及する可能性あり。</div>
+    <div class="checklist-item"><span class="checklist-time">09:00 寄り付き</span> — 任天堂・フジクラなど直近急伸銘柄の寄り付き値を確認、ギャップの有無をチェック。</div>
+    <div class="checklist-item"><span class="checklist-time">11:00頃 前場引け</span> — 前場の値動きと出来高を確認、後場の戦略を再点検。</div>
+    <div class="checklist-item"><span class="checklist-time">12:30-13:00 後場寄り</span> — 昼のニュースフローと先物動向を確認。</div>
+    <div class="checklist-item"><span class="checklist-time">14:30-15:00 大引け前</span> — 引けにかけての値動きを確認し、必要なら指値の見直し。</div>
+  </div>
+  <h3>米国市場（本日 2026-08-11(火) 22:30 JST～翌8/12 5:00 JST、夏時間）</h3>
+  <div class="card">
+    <div class="checklist-item"><span class="checklist-time">22:30 JST（東証引け後・欧州時間帯）</span> — 欧州株、米株価指数先物、USDJPYの動きを確認。</div>
+    <div class="checklist-item"><span class="checklist-time">23:30 JST（米国寄り付き前）</span> — この日は主要指標の発表なし。個別ではCRM（決算8/26予定、本日は材料薄）の値動きを確認。※プレマーケット価格は判定には使用しません。</div>
+    <div class="checklist-item"><span class="checklist-time">翌05:00-06:00 JST（米国引け後）</span> — <strong>最重要：SMCI第4四半期決算発表（引け後）。</strong>粗利益率ガイダンス（15～17%）と売上高（レンジ下限見込み）の実際の数値、時間外の株価反応を確認。</div>
+    <div class="checklist-item"><span class="checklist-time">翌08:00 JST（東証寄り付き前レビュー）</span> — SMCI決算の時間外反応とUSDJPYの水準を、上記「東証チェックリスト」の寄り付き前チェックに反映。</div>
+  </div>
+
+  <h2>直近トレードレビュー</h2>
+  <p class="small muted">ユーザーからチャット等で取引履歴の共有があった場合に、このセクションで直近の売買を振り返ります（今回は共有情報がないため割愛）。</p>
+
+  <h2>セクター集中・相関リスク・為替エクスポージャー</h2>
+  <div class="card">
+    <p><strong>セクター集中：</strong>浜松ホトニクス（光学・センサー）、Super Micro（AIサーバー）、SpaceX（宇宙・AIインフラ投資）は広義の「AIインフラ関連」で括れ、保有資産の一角を占めます。ウォッチリストのソフトバンクグループ（AI投資）とフジクラ（AI向け光部品）も同テーマに属しており、両銘柄を新規に組み入れると、このAIインフラ・クラスターへの集中度がさらに高まる点に注意が必要です。米国AI関連センチメントが悪化した場合、これらの銘柄が同時に下落する相関リスクがあります。</p>
+    <p>一方、任天堂（エンタメ）、クボタ（農業機械）、NTT（通信）、IHI（防衛・重工業）は比較的値動きの相関が低く、分散効果を持たせています。</p>
+    <p><strong>為替エクスポージャー：</strong>米ドル建て資産（CRM・SMCI・SPCX）は円換算で約¥617,000、ポートフォリオ全体（約¥1,816,000）の約34.0%を占めます。USDJPYが例えば157.41→150.00へ5%程度円高に振れた場合、円換算ベースの評価額は米ドル建て資産だけで約¥29,000程度目減りする計算になります（個別銘柄の株価変動とは別に発生する為替影響です）。円高リスクをヘッジしたい場合、為替予約やFXでのショートポジション、または円建て資産の比率を高めるなどの選択肢が考えられます。</p>
+    <p><strong>リバランス・ヘッジ案（提案）：</strong>①AIインフラ・クラスターの比率が既に一定水準にあるため、9984・5803の新規組み入れは急がず、既存ポジションの利益確定や地合い悪化時の押し目を待つ。②米ドル比率が3割を超えているため、追加の米国株購入は円資産とのバランスを意識する。③クボタ・IHIなど相関の低い銘柄への資金配分を維持し、分散効果を保つ。</p>
+  </div>
+
+  <h2>簡易ストラテジー読み（方向感のみ・数値的バックテストではありません）</h2>
+  <div class="card">
+    <p>本レポートはプログラムによるOHLCデータへのアクセスを持たないため、ニュース・決算内容・確定終値からの方向感による定性的な読みに留まります。全体としては、①好決算銘柄（任天堂・クボタ・IHI・浜松ホトニクス・フジクラ）への資金流入が続く「決算モメンタム相場」の様相が強く、②米国では雇用統計の弱さを受けた利下げ期待が株式の下支えとなっている一方、③SMCI決算やCRM決算、SPCXのロックアップ解除など個別イベントの影響が短期的な値動きを左右しやすい局面と考えられます。追随買いは決算・イベント通過後の値動き確認を経てからが望ましいという見立てです。</p>
+  </div>
+
+  <h2>本日の注目セットアップ Top5</h2>
+  <div class="tablewrap">
+    <table>
+      <tr><th>銘柄</th><th>エントリー</th><th>利確目標</th><th>損切り</th><th>リスクリワード</th><th>コメント</th></tr>
+      <tr><td>クボタ 6326</td><td>¥2,750～2,770</td><td>¥2,950</td><td>¥2,650</td><td>約1.8:1</td><td>上方修正を織り込み切っていない出遅れ銘柄。決算モメンタム型。</td></tr>
+      <tr><td>IHI 7013</td><td>¥2,740～2,760</td><td>¥2,950</td><td>¥2,650</td><td>約1.9:1</td><td>防衛・航空エンジンの構造的追い風。特別利益剥落には注意。</td></tr>
+      <tr><td>フジクラ 5803</td><td>¥5,300～5,400（押し目）</td><td>¥6,000</td><td>¥4,900</td><td>約1.5:1</td><td>値幅極端のため損切り幅を広めに設定。ハイリスク・ハイリターン。</td></tr>
+      <tr><td>日経平均株価</td><td>66,700～67,000</td><td>68,500</td><td>65,600</td><td>約1.4:1</td><td>決算モメンタムで最高値圏更新。押し目形成待ちのブレイクアウト追随型。</td></tr>
+      <tr><td>SpaceX SPCX</td><td>$135～138</td><td>$150</td><td>$125</td><td>約1.3:1</td><td>好決算だがロックアップ解除中で需給リスクあり。ボラティリティ前提のポジションサイズ管理を推奨。</td></tr>
+    </table>
+  </div>
+  <p class="small muted">上記はいずれもエントリー・利確・損切りの目安であり、執行タイミングやサイズはご自身の資金管理方針に従って判断してください。</p>
+
+  <h2>データソース</h2>
+  <div class="card small">
+    <p><strong>価格：</strong>portfolio-data の <code>prices.json</code>（東証レグ fetched_at: 2026-08-10 18:44:20 +0900、米国レグ fetched_at: 2026-08-11 06:54:59 +0900）。session_dates: TYO/NYSE/NASDAQ すべて2026-08-10。保有8銘柄＋ウォッチリスト2銘柄の全10銘柄が yahoo_chart_api・stockanalysis の2ソース一致で confirmed=true、未確認銘柄はありませんでした（unconfirmed: []）。指数（日経平均・S&P500・NASDAQ総合）は単一ソース（yahoo_chart_api）のため参考値として扱っています。</p>
+    <p><strong>為替：</strong>USDJPY 158.64（session_date 2026-08-10、frankfurter_ecb 158.64／yahoo_chart_api 157.89 の2ソースで confirmed=true、source_spread 0.47%）。</p>
+    <p><strong>ニュース：</strong>WebSearchによる各銘柄・マクロ指標の検索結果に基づく。個別ソースは各セクション内で言及。</p>
+  </div>
+
   <div class="disclaimer">
     これは参考情報としての提案であり、正式な投資助言ではありません。最終的な売買判断と注文の実行は、ご自身の責任で行ってください。
   </div>
